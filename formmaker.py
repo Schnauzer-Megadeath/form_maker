@@ -1,6 +1,7 @@
 import os
 import docx
 from docx.shared import Cm, Inches
+from datetime import datetime
 
 # paragraph_format.left_indent = Inches(0.5)
 # paragraph_format.first_line_indent
@@ -8,6 +9,7 @@ from docx.shared import Cm, Inches
 # font = run.font
 # font.size = Pt(16)
 
+DATE = datetime.today().strftime("%m/%d/%Y")
 
 #change directory into save folder /docs
 os.chdir(os.path.join(os.getcwd(), "docs"))
@@ -21,9 +23,19 @@ while(not_finished):
     doc = docx.Document()
 
     # Write the first section of the document
-    doc_paragraph1 = doc.add_paragraph('''Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.''')
-    par1 = doc_paragraph1.add_run()
-    par1.add_break()
+    doc_header = doc.add_paragraph()
+    header_run = doc_header.add_run("EQUIPMENT CHAIN OF CUSTODY")
+    header_run.bold = True
+    header_run.add_break()
+
+
+    ###
+    sect1 = doc.add_paragraph("")
+    sect1_run = sect1.add_run("Date:" + DATE)
+    sect1_run.bold = True
+    sect1_run = sect1.add_run("I ________________________________ ACCEPT CUSTODY OF THE PROPERTY BEING")
+    sect1_run = sect1.add_run("DELIVERED BY ________________________________________  LISTED BELOW:")
+
 
     # Create the table 
     table = doc.add_table(rows=5, cols=4)
@@ -76,17 +88,18 @@ while(not_finished):
 
 
     # Write the third section of the document
+     # Write the third section of the document
     doc_paragraph2 = doc.add_paragraph("")
     par2 = doc_paragraph2.add_run()
     par2.add_break()
-    doc.add_paragraph("ultrices neque. Vulputate eu scelerisque felis imperdiet proin. Tincidunt augue interdum velit euismod in pellentesque. ")
+    doc.add_paragraph("I UNDERSTAND ______________________________________ IS ACCOUNTABLE FOR THIS ")
     doc.add_paragraph("A erat nam at lectus urna duis. Tortor condimentum lacinia quis vel eros donec ac odio. Maecenas pharetra convallis posuere morbi. Interdum posuere lorem ipsum dolor sit amet consectetur adipiscing.")
     doc.add_paragraph("Sign here ________________________________________________________")
     doc.add_paragraph("Sign here ________________________________________________________")
 
 
     # Save
-    save_name = "document" + str(document_number) + ".docx"
+    save_name = "\\legal_hold" + "_" + DATE + "(" + str(document_number) + ")" + ".docx"
     doc.save(save_name)
 
     # Check if the user would like to continue
