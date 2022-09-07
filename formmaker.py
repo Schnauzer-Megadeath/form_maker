@@ -1,3 +1,4 @@
+import os
 import docx
 from docx.shared import Cm, Inches
 
@@ -7,8 +8,13 @@ from docx.shared import Cm, Inches
 # font = run.font
 # font.size = Pt(16)
 
-not_finished = True
+
+#change directory into save folder /docs
+os.chdir(os.path.join(os.getcwd(), "docs"))
+
 document_number = 1
+
+not_finished = True
 while(not_finished):
 
     # Create instance of word document
@@ -18,8 +24,6 @@ while(not_finished):
     doc_paragraph1 = doc.add_paragraph('''Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.''')
     par1 = doc_paragraph1.add_run()
     par1.add_break()
-
-
 
     # Create the table 
     table = doc.add_table(rows=5, cols=4)
@@ -89,7 +93,10 @@ while(not_finished):
     not_finished = input("Would you like to continue (y/n): ")
     not_finished = not_finished.lower()
     if (not_finished == "yes" or not_finished == "y"):
+        document_number += 1;
         pass
     elif (not_finished == "no" or not_finished == "n"):
+        not_finished = False
+    else:
         not_finished = False
 
